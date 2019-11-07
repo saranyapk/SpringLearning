@@ -1,0 +1,27 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-init-method = "init"
+       default-destroy-method = "destroy">
+
+    <bean id = "helloWorld" class = "com.saranyapk.springlearning.beans.HelloWorld" scope="singleton" lazy-init = "true"
+          init-method = "init" destroy-method = "destroy">
+        <property name = "message" value = "Hello World! Have a great day!"/>
+    </bean>
+
+    <bean id = "helloWorld2" class = "com.saranyapk.springlearning.beans.HelloWorld2" scope="prototype" lazy-init = "true">
+        <property name = "message" value = "Hello World2! Have a great day!"/>
+    </bean>
+
+    <bean class = "com.saranyapk.springlearning.processors.InitHelloWorld">
+        <property name="order" value="1" />
+    </bean>
+
+    <bean id ="helloIndia" class = "com.tutorialspoint.HelloIndia" parent = "helloWorld">
+        <property name = "message1" value = "Hello India!"/>
+        <property name = "message3" value = "Namaste India!"/>
+    </bean>
+</beans>
