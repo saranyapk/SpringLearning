@@ -1,11 +1,22 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 
-<beans xmlns = "http://www.springframework.org/schema/beans"
-       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation = "http://www.springframework.org/schema/beans
-      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
-       default-init-method = "init"
-       default-destroy-method = "destroy">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd"
+       default-init-method="init"
+       default-destroy-method="destroy">
+
+    <context:annotation-config/>
+
+    <task:annotation-driven executor="myExecutor"/>
+    <task:executor id="myExecutor" pool-size="5"/>
+
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
 
     <bean id = "helloWorld" class = "com.saranyapk.springlearning.beans.HelloWorld" scope="singleton" lazy-init = "true"
           init-method = "init" destroy-method = "destroy">
@@ -20,8 +31,29 @@
         <property name="order" value="1" />
     </bean>
 
-    <bean id ="helloIndia" class = "com.tutorialspoint.HelloIndia" parent = "helloWorld">
+    <bean id ="helloIndia" class = "com.saranyapk.springlearning.beans.HelloIndia" parent = "helloWorld">
         <property name = "message1" value = "Hello India!"/>
         <property name = "message3" value = "Namaste India!"/>
     </bean>
+
+    <!-- Definition for textEditor bean -->
+    <bean id = "textEditor" class = "com.saranyapk.springlearning.beans.TextEditor"> <!--autowire="byType"-->
+        <property name = "name" value = "Generic Text Editor" />
+    </bean>
+
+    <!-- Definition for spellChecker bean -->
+    <bean id = "SpellChecker" class = "com.saranyapk.springlearning.beans.SpellChecker"></bean>
+
+    <bean id = "SpellChecker2" class = "com.saranyapk.springlearning.beans.SpellChecker"></bean>
+
+    <bean id = "ContextClosedEventHandler" class = "com.saranyapk.springlearning.eventhandlers.ContextClosedEventHandler"/>
+    <bean id = "ContextStartedEventHandler" class = "com.saranyapk.springlearning.eventhandlers.ContextStartedEventHandler"/>
+    <bean id = "ContextStoppedEventHandler" class = "com.saranyapk.springlearning.eventhandlers.ContextStoppedEventHandler"/>
+    <bean id = "ContextRefreshedEventHandler" class = "com.saranyapk.springlearning.eventhandlers.ContextRefreshedEventHandler"/>
+    <bean id = "RequestHandledEventHandler" class = "com.saranyapk.springlearning.eventhandlers.RequestHandledEventHandler"/>
+
+    <bean id = "customEventHandler" class = "com.saranyapk.springlearning.eventhandlers.CustomEventHandler"/>
+    <bean id = "customEventPublisher" class = "com.saranyapk.springlearning.events.CustomEventPublisher"/>
+
+    <bean id = "schedulerService" class = "com.saranyapk.springlearning.scheduler.SchedulerService"/>
 </beans>
